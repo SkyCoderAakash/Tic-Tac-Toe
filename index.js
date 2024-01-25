@@ -29,6 +29,11 @@ const winnerCheck = ()=>{
         let value3 = boxes[pattern[2]].innerHTML;
         if(value1 != "" && value2 != "" && value3 != ""){
             if(value1===value2 && value2== value3){
+                // console.log(boxes[pattern[0]],boxes[pattern[1]],boxes[pattern[2]])
+                boxes[pattern[0]].style.backgroundColor = 'red';
+                boxes[pattern[1]].style.backgroundColor = 'red';
+                boxes[pattern[2]].style.backgroundColor = 'red';
+                gameWin = true;
                 h2.classList.remove('hide');
                 h2.innerHTML = `winner is ${value1}`;
                 disable()
@@ -49,17 +54,23 @@ boxes.forEach((box)=>{
         box.disabled = true;
         winnerCheck();
         count += 1;
-        if(count==9 && h2.innerHTML==""){
+        // console.log(count);
+        if(count==9 && gameWin == false){
             h2.innerText = 'Match Draw'
             h2.classList.remove('hide');
+            console.log("draw");
         };
     });
-    reset.addEventListener('click',()=>{
+});
+
+reset.addEventListener('click',()=>{
+    for(const box of boxes){
         box.innerHTML = "";
-        h2.classList.add('hide');
-        h3.classList.add('hide');
-        turn = "0";
-        count = 0;
         box.disabled = false;
-    });
+        turn = "0";
+        box.style.backgroundColor = "rgb(28, 27, 27)";
+    };
+    h2.classList.add('hide');
+    count = 0;
+    gameWin = false
 });
